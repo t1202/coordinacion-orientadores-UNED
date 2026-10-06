@@ -1,0 +1,54 @@
+@model List<CoordinacionOrientadores.Models.Asignacion>
+@using CoordinacionOrientadores.Models
+@{
+    ViewData["Title"] = "Reporte";
+    var orientadores = ViewBag.Orientadores as List<Orientador>;
+}
+
+<h1>Reporte de calendarización</h1>
+<p class="text-muted">Esto reemplaza el Word que se armaba a mano: filtre y descargue en CSV (se abre directo en Excel).</p>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <select name="orientadorId" class="form-select">
+            <option value="">-- Todos --</option>
+            @foreach (var o in orientadores!)
+            {
+                <option value="@o.Id" selected="@(ViewBag.OrientadorId?.ToString() == o.Id.ToString())">@o.Nombre</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <input type="date" name="desde" class="form-control" value="@ViewBag.Desde" />
+    </div>
+    <div class="col-auto">
+        <input type="date" name="hasta" class="form-control" value="@ViewBag.Hasta" />
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
+    </div>
+    <div class="col-auto">
+        <a class="btn btn-success" asp-action="ReporteCsv" asp-route-orientadorId="@ViewBag.OrientadorId" asp-route-desde="@ViewBag.Desde" asp-route-hasta="@ViewBag.Hasta">⬇ Descargar CSV / Excel</a>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th><th>Hora</th><th>Proceso</th><th>Orientador</th><th>Sede</th><th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var a in Model)
+    {
+        <tr>
+            <td>@a.Fecha.ToString("dd/MM/yyyy")</td>
+            <td>@a.HoraInicio.ToString(@"hh\:mm") - @a.HoraFin.ToString(@"hh\:mm")</td>
+            <td>@a.ProcesoNombre</td>
+            <td>@a.OrientadorNombre</td>
+            <td>@a.Sede</td>
+            <td>@a.Estado</td>
+        </tr>
+    }
+    </tbody>
+</table>

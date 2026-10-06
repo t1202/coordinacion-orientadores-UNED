@@ -1,0 +1,103 @@
+@model List<CoordinacionOrientadores.Models.Asignacion>
+@using CoordinacionOrientadores.Models
+@{
+    ViewData["Title"] = "Asignaciones";
+    var orientadores = ViewBag.Orientadores as List<Orientador>;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Asignaciones</h1>
+    <a class="btn btn-primary" asp-action="Nueva">+ Programar proceso</a>
+</div>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <select name="orientadorId" class="form-select">
+            <option value="">-- Todos los orientadores --</option>
+            @foreach (var o in orientadores!)
+            {
+                <option value="@o.Id" selected="@(ViewBag.OrientadorId?.ToString() == o.Id.ToString())">@o.Nombre</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <input type="date" name="desde" class="form-control" value="@ViewBag.Desde" />
+    </div>
+    <div class="col-auto">
+        <input type="date" name="hasta" class="form-control" value="@ViewBag.Hasta" />
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
+    </div>
+</form>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Proceso</th>
+            <th>Orientador</th>
+            <th>Sede</th>
+            <th>Enlace</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var a in Model)
+    {
+        var filaClase = a.Estado == EstadoAsignacion.EnConflicto ? "table-danger" : (a.Estado == EstadoAsignacion.Sustituido ? "table-warning" : "");
+        <tr class="@filaClase">
+            <td>@a.Fecha.ToString("dd/MM/yyyy")</td>
+            <td>@a.HoraInicio.ToString(@"hh\:mm") - @a.HoraFin.ToString(@"hh\:mm")</td>
+            <td>@a.ProcesoNombre</td>
+            <td>@a.OrientadorNombre</td>
+            <td>@a.Sede</td>
+            <td>
+                @if (!string.IsNullOrEmpty(a.EnlaceReunion))
+                {
+                    <a href="@a.EnlaceReunion" target="_blank">Abrir</a>
+                }
+            </td>
+            <td>
+                @if (a.Estado == EstadoAsignacion.EnConflicto)
+                {
+                    <span class="badge bg-danger">⚠ En conflicto (ausencia)</span>
+                }
+                else if (a.Estado == EstadoAsignacion.Sustituido)
+                {
+                    <span class="badge bg-warning text-dark">Sustituido</span>
+                }
+                else
+                {
+                    <span class="badge bg-success">@a.Estado</span>
+                }
+            </td>
+            <td class="text-end">
+                @if (a.Estado == EstadoAsignacion.EnConflicto)
+                {
+                    <form asp-action="Sustituir" asp-route-id="@a.Id" method="post" class="d-inline-flex gap-1">
+                        <select name="nuevoOrientadorId" class="form-select form-select-sm" style="width:auto">
+                            @foreach (var o in orientadores!.Where(o => o.Id != a.OrientadorId))
+                            {
+                                <option value="@o.Id">@o.Nombre</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-warning">Sustituir</button>
+                    </form>
+                }
+                <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@a.Id">Editar</a>
+                <form asp-action="Delete" asp-route-id="@a.Id" method="post" class="d-inline" onsubmit="return confirm('¿Eliminar esta asignación?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

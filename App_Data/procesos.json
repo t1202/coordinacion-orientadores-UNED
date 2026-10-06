@@ -1,0 +1,58 @@
+[
+  {
+    "Id": 1,
+    "Nombre": "Asesor\u00EDa de admisi\u00F3n y matr\u00EDcula",
+    "Descripcion": "Para estudiantes aspirantes, semana previa a matr\u00EDcula",
+    "DuracionMinutos": 60,
+    "Modalidad": 0,
+    "RequiereEnlace": true
+  },
+  {
+    "Id": 2,
+    "Nombre": "Consultas en matr\u00EDcula",
+    "Descripcion": "Espacio sincr\u00F3nico durante la semana de matr\u00EDcula",
+    "DuracionMinutos": 60,
+    "Modalidad": 0,
+    "RequiereEnlace": true
+  },
+  {
+    "Id": 3,
+    "Nombre": "Cita de orientaci\u00F3n e inducci\u00F3n acad\u00E9mica",
+    "Descripcion": "Inducci\u00F3n a la UNED para estudiantes de primer ingreso",
+    "DuracionMinutos": 90,
+    "Modalidad": 0,
+    "RequiereEnlace": true
+  },
+  {
+    "Id": 4,
+    "Nombre": "Taller de t\u00E9cnicas de estudio",
+    "Descripcion": "Proceso psicoeducativo, eje acad\u00E9mico",
+    "DuracionMinutos": 120,
+    "Modalidad": 0,
+    "RequiereEnlace": true
+  },
+  {
+    "Id": 5,
+    "Nombre": "Atenci\u00F3n individual",
+    "Descripcion": "Atenci\u00F3n a dudas vocacionales, acad\u00E9micas o personales",
+    "DuracionMinutos": 45,
+    "Modalidad": 0,
+    "RequiereEnlace": true
+  },
+  {
+    "Id": 6,
+    "Nombre": "Proceso presencial en sede",
+    "Descripcion": "Procesos grupales presenciales seg\u00FAn calendarizaci\u00F3n por sede",
+    "DuracionMinutos": 120,
+    "Modalidad": 1,
+    "RequiereEnlace": false
+  },
+  {
+    "Id": 7,
+    "Nombre": "Atenci\u00F3n a poblaci\u00F3n privada de libertad",
+    "Descripcion": "Siempre presencial, requiere coordinaci\u00F3n de accesos",
+    "DuracionMinutos": 120,
+    "Modalidad": 1,
+    "RequiereEnlace": false
+  }
+]

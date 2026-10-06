@@ -1,0 +1,59 @@
+@model CoordinacionOrientadores.Models.Orientador
+@{
+    ViewData["Title"] = "Editar orientador";
+}
+
+<h1>Editar orientador</h1>
+
+<form asp-action="Edit" method="post" class="row g-3" style="max-width:700px">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-md-8">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Sede" class="form-label"></label>
+        <input asp-for="Sede" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Correo" class="form-label"></label>
+        <input asp-for="Correo" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="TipoJornada" class="form-label"></label>
+        <select asp-for="TipoJornada" class="form-select" asp-items="Html.GetEnumSelectList<CoordinacionOrientadores.Models.TipoJornada>()"></select>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="HoraInicio" class="form-label"></label>
+        <input type="time" name="HoraInicio" class="form-control" value="@Model.HoraInicio.ToString(@"hh\:mm")" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="HoraFin" class="form-label"></label>
+        <input type="time" name="HoraFin" class="form-control" value="@Model.HoraFin.ToString(@"hh\:mm")" />
+    </div>
+
+    <div class="col-12">
+        <label class="form-label d-block">Días laborales</label>
+        @foreach (var dia in new[] { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday })
+        {
+            var checked_ = Model.DiasLaborales.Contains(dia) ? "checked" : "";
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="DiasLaborales" value="@dia" id="dia_@dia" @checked_>
+                <label class="form-check-label" for="dia_@dia">@dia</label>
+            </div>
+        }
+    </div>
+
+    <div class="col-12 form-check">
+        <input asp-for="Activo" class="form-check-input" />
+        <label asp-for="Activo" class="form-check-label"></label>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a asp-action="Index" class="btn btn-link">Cancelar</a>
+    </div>
+</form>

@@ -1,0 +1,120 @@
+[
+  {
+    "Id": 1,
+    "Nombre": "Magda Lorena Artavia Castrillo",
+    "Sede": "Sede Central",
+    "Correo": "magda@uned.ac.cr",
+    "TipoJornada": 0,
+    "DiasLaborales": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "HoraInicio": "08:00:00",
+    "HoraFin": "16:00:00",
+    "Activo": true,
+    "HorasSemanalesContrato": 40
+  },
+  {
+    "Id": 2,
+    "Nombre": "Luis Carlos",
+    "Sede": "Sede Central",
+    "Correo": "luiscarlos@uned.ac.cr",
+    "TipoJornada": 0,
+    "DiasLaborales": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "HoraInicio": "08:00:00",
+    "HoraFin": "16:00:00",
+    "Activo": true,
+    "HorasSemanalesContrato": 40
+  },
+  {
+    "Id": 3,
+    "Nombre": "Andrea",
+    "Sede": "Desamparados",
+    "Correo": "andrea@uned.ac.cr",
+    "TipoJornada": 0,
+    "DiasLaborales": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "HoraInicio": "08:00:00",
+    "HoraFin": "16:00:00",
+    "Activo": true,
+    "HorasSemanalesContrato": 40
+  },
+  {
+    "Id": 4,
+    "Nombre": "Karol (Carol) Vieto",
+    "Sede": "Escaz\u00FA",
+    "Correo": "karol@uned.ac.cr",
+    "TipoJornada": 1,
+    "DiasLaborales": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "HoraInicio": "09:00:00",
+    "HoraFin": "15:00:00",
+    "Activo": true,
+    "HorasSemanalesContrato": 30
+  },
+  {
+    "Id": 6,
+    "Nombre": "Carlos Daniel",
+    "Sede": "Cartago",
+    "Correo": "carlosd@uned.ac.cr",
+    "TipoJornada": 2,
+    "DiasLaborales": [
+      1,
+      2,
+      4
+    ],
+    "HoraInicio": "18:00:00",
+    "HoraFin": "21:00:00",
+    "Activo": true,
+    "HorasSemanalesContrato": 20
+  },
+  {
+    "Id": 7,
+    "Nombre": "Jolien (Jolyn)",
+    "Sede": "Sarapiqu\u00ED",
+    "Correo": "jolien@uned.ac.cr",
+    "TipoJornada": 3,
+    "DiasLaborales": [
+      4,
+      6
+    ],
+    "HoraInicio": "14:00:00",
+    "HoraFin": "18:00:00",
+    "Activo": true,
+    "HorasSemanalesContrato": 10
+  },
+  {
+    "Id": 8,
+    "Nombre": "Anthony Herrera",
+    "Sede": "Sede Central",
+    "Correo": "anthonyhch12@gmail.com",
+    "TipoJornada": 3,
+    "DiasLaborales": [
+      5,
+      6
+    ],
+    "HoraInicio": "18:00:00",
+    "HoraFin": "20:30:00",
+    "Activo": true,
+    "HorasSemanalesContrato": 10
+  }
+]

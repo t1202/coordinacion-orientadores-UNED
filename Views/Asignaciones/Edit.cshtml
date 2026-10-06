@@ -1,0 +1,64 @@
+@model CoordinacionOrientadores.Models.Asignacion
+@using CoordinacionOrientadores.Models
+@{
+    ViewData["Title"] = "Editar asignación";
+    var procesos = ViewBag.Procesos as List<Proceso>;
+    var orientadores = ViewBag.OrientadoresList as List<Orientador>;
+}
+
+<h1>Editar asignación</h1>
+<form asp-action="Edit" method="post" class="row g-3" style="max-width:700px">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-12">
+        <label class="form-label">Proceso</label>
+        <select asp-for="ProcesoId" class="form-select">
+            @foreach (var p in procesos!)
+            {
+                <option value="@p.Id">@p.Nombre</option>
+            }
+        </select>
+    </div>
+    <div class="col-12">
+        <label class="form-label">Orientador</label>
+        <select asp-for="OrientadorId" class="form-select">
+            @foreach (var o in orientadores!)
+            {
+                <option value="@o.Id">@o.Nombre</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Fecha" class="form-label"></label>
+        <input type="date" name="Fecha" class="form-control" value="@Model.Fecha.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-4">
+        <label asp-for="HoraInicio" class="form-label"></label>
+        <input type="time" name="HoraInicio" class="form-control" value="@Model.HoraInicio.ToString(@"hh\:mm")" />
+    </div>
+    <div class="col-md-4">
+        <label asp-for="HoraFin" class="form-label"></label>
+        <input type="time" name="HoraFin" class="form-control" value="@Model.HoraFin.ToString(@"hh\:mm")" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Sede" class="form-label"></label>
+        <input asp-for="Sede" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="EnlaceReunion" class="form-label"></label>
+        <input asp-for="EnlaceReunion" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Estado" class="form-label"></label>
+        <select asp-for="Estado" class="form-select" asp-items="Html.GetEnumSelectList<EstadoAsignacion>()"></select>
+    </div>
+    <div class="col-12">
+        <label asp-for="Notas" class="form-label"></label>
+        <textarea asp-for="Notas" class="form-control"></textarea>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a asp-action="Index" class="btn btn-link">Cancelar</a>
+    </div>
+</form>

@@ -1,0 +1,65 @@
+@model CoordinacionOrientadores.Models.SugerenciasVM
+@{
+    ViewData["Title"] = "Sugerencias de asignación";
+}
+
+<h1>Paso 2 de 2: elegir orientador</h1>
+<p>
+    <strong>@Model.ProcesoNombre</strong> &middot;
+    @Model.Datos.Fecha.ToString("dddd dd/MM/yyyy") &middot;
+    @Model.Datos.HoraInicio.ToString(@"hh\:mm") - @Model.Datos.HoraFin.ToString(@"hh\:mm")
+</p>
+<p class="text-muted">Ordenados primero los disponibles, y entre ellos el que tiene <strong>menos horas acumuladas</strong> esta semana — así se reparte la carga de forma equitativa, igual que lo hacía la coordinadora a mano.</p>
+
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th>Orientador</th>
+            <th>Sede</th>
+            <th>Horas asignadas esta semana</th>
+            <th>Horas de contrato</th>
+            <th>Disponibilidad</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var s in Model.Sugerencias)
+    {
+        <tr class="@(s.Disponible ? "" : "table-secondary text-muted")">
+            <td>@s.Nombre</td>
+            <td>@s.Sede</td>
+            <td>@s.HorasAsignadasSemana h</td>
+            <td>@s.HorasContrato h</td>
+            <td>
+                @if (s.Disponible)
+                {
+                    <span class="badge bg-success">Disponible</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary" title="@s.Motivo">No disponible</span>
+                    <div class="small text-muted">@s.Motivo</div>
+                }
+            </td>
+            <td class="text-end">
+                @if (s.Disponible)
+                {
+                    <form asp-action="Confirmar" method="post">
+                        <input type="hidden" name="orientadorId" value="@s.OrientadorId" />
+                        <input type="hidden" name="procesoId" value="@Model.Datos.ProcesoId" />
+                        <input type="hidden" name="fecha" value="@Model.Datos.Fecha.ToString("yyyy-MM-dd")" />
+                        <input type="hidden" name="horaInicio" value="@Model.Datos.HoraInicio" />
+                        <input type="hidden" name="horaFin" value="@Model.Datos.HoraFin" />
+                        <input type="hidden" name="sede" value="@Model.Datos.Sede" />
+                        <input type="hidden" name="enlaceReunion" value="@Model.Datos.EnlaceReunion" />
+                        <input type="hidden" name="notas" value="@Model.Datos.Notas" />
+                        <button type="submit" class="btn btn-sm btn-primary">Asignar</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-action="Nueva" class="btn btn-link">← Cambiar fecha/horario</a>

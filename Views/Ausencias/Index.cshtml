@@ -1,0 +1,48 @@
+@model List<CoordinacionOrientadores.Models.Ausencia>
+@using CoordinacionOrientadores.Models
+@{
+    ViewData["Title"] = "Ausencias";
+    var orientadores = ViewBag.Orientadores as Dictionary<int, Orientador>;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Vacaciones, incapacidades y citas</h1>
+    <a class="btn btn-primary" asp-action="Create">+ Registrar ausencia</a>
+</div>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-info">@TempData["Mensaje"]</div>
+}
+
+<p class="text-muted">Cada orientador registra aquí sus propias vacaciones, incapacidades o citas. El sistema bloquea automáticamente esas fechas para no asignarle nada, y si ya tenía algo asignado, lo marca "En conflicto" en <a asp-controller="Asignaciones" asp-action="Index">Asignaciones</a> para que la coordinadora le busque sustituto.</p>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Orientador</th>
+            <th>Tipo</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+            <th>Comentario</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var a in Model)
+    {
+        <tr>
+            <td>@(orientadores!.TryGetValue(a.OrientadorId, out var o) ? o.Nombre : "(eliminado)")</td>
+            <td>@a.Tipo</td>
+            <td>@a.FechaInicio.ToString("dd/MM/yyyy")</td>
+            <td>@a.FechaFin.ToString("dd/MM/yyyy")</td>
+            <td>@a.Comentario</td>
+            <td class="text-end">
+                <form asp-action="Delete" asp-route-id="@a.Id" method="post" class="d-inline" onsubmit="return confirm('¿Eliminar esta ausencia?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,52 @@
+@model List<CoordinacionOrientadores.Models.Orientador>
+@{
+    ViewData["Title"] = "Orientadores";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Orientadores</h1>
+    <a class="btn btn-primary" asp-action="Create">+ Nuevo orientador</a>
+</div>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Sede</th>
+            <th>Jornada</th>
+            <th>Horas/semana</th>
+            <th>Días laborales</th>
+            <th>Horario</th>
+            <th>Activo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var o in Model)
+    {
+        <tr>
+            <td>@o.Nombre</td>
+            <td>@o.Sede</td>
+            <td>@o.TipoJornada</td>
+            <td>@o.HorasSemanalesContrato h</td>
+            <td>@string.Join(", ", o.DiasLaborales.Select(d => d.ToString()[..3]))</td>
+            <td>@o.HoraInicio.ToString(@"hh\:mm") - @o.HoraFin.ToString(@"hh\:mm")</td>
+            <td>
+                @if (o.Activo) { <span class="badge bg-success">Activo</span> }
+                else { <span class="badge bg-secondary">Inactivo</span> }
+            </td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@o.Id">Editar</a>
+                <form asp-action="Delete" asp-route-id="@o.Id" method="post" class="d-inline" onsubmit="return confirm('¿Eliminar a @o.Nombre?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

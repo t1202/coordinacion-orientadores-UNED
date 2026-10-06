@@ -1,0 +1,53 @@
+@model CoordinacionOrientadores.Models.NuevaAsignacionInput
+@using CoordinacionOrientadores.Models
+@{
+    ViewData["Title"] = "Programar proceso";
+    var procesos = ViewBag.Procesos as List<Proceso>;
+}
+
+<h1>Programar un proceso</h1>
+<p class="text-muted">Paso 1 de 2: indique qué, cuándo y a qué hora. En el siguiente paso el sistema le sugerirá a quién asignarlo, repartiendo la carga de forma equitativa.</p>
+
+<form asp-action="Sugerencias" method="post" class="row g-3" style="max-width:700px">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-12">
+        <label class="form-label">Proceso</label>
+        <select name="ProcesoId" class="form-select" required>
+            <option value="">-- Seleccione --</option>
+            @foreach (var p in procesos!)
+            {
+                <option value="@p.Id">@p.Nombre (@p.DuracionMinutos min, @p.Modalidad)</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Fecha</label>
+        <input type="date" name="Fecha" class="form-control" value="@Model.Fecha.ToString("yyyy-MM-dd")" required />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Hora inicio</label>
+        <input type="time" name="HoraInicio" class="form-control" value="@Model.HoraInicio.ToString(@"hh\:mm")" required />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Hora fin</label>
+        <input type="time" name="HoraFin" class="form-control" value="@Model.HoraFin.ToString(@"hh\:mm")" required />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Sede / lugar</label>
+        <input type="text" name="Sede" class="form-control" placeholder="Ej. Sede Central, Escazú, virtual..." />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Enlace de reunión (opcional en este paso)</label>
+        <input type="url" name="EnlaceReunion" class="form-control" placeholder="https://teams.microsoft.com/..." />
+    </div>
+    <div class="col-12">
+        <label class="form-label">Notas</label>
+        <textarea name="Notas" class="form-control"></textarea>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Ver orientadores disponibles →</button>
+        <a asp-action="Index" class="btn btn-link">Cancelar</a>
+    </div>
+</form>

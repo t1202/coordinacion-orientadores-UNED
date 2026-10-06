@@ -1,0 +1,44 @@
+@model CoordinacionOrientadores.Models.Ausencia
+@using CoordinacionOrientadores.Models
+@{
+    ViewData["Title"] = "Registrar ausencia";
+    var orientadores = ViewBag.Orientadores as List<Orientador>;
+}
+
+<h1>Registrar vacaciones / incapacidad / cita</h1>
+
+<form asp-action="Create" method="post" class="row g-3" style="max-width:600px">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-12">
+        <label class="form-label">Orientador</label>
+        <select asp-for="OrientadorId" class="form-select">
+            <option value="">-- Seleccione --</option>
+            @foreach (var o in orientadores!)
+            {
+                <option value="@o.Id">@o.Nombre</option>
+            }
+        </select>
+    </div>
+    <div class="col-12">
+        <label asp-for="Tipo" class="form-label"></label>
+        <select asp-for="Tipo" class="form-select" asp-items="Html.GetEnumSelectList<TipoAusencia>()"></select>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="FechaInicio" class="form-label"></label>
+        <input type="date" name="FechaInicio" class="form-control" value="@Model.FechaInicio.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="FechaFin" class="form-label"></label>
+        <input type="date" name="FechaFin" class="form-control" value="@Model.FechaFin.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-12">
+        <label asp-for="Comentario" class="form-label"></label>
+        <textarea asp-for="Comentario" class="form-control"></textarea>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+        <a asp-action="Index" class="btn btn-link">Cancelar</a>
+    </div>
+</form>

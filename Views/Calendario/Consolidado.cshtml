@@ -1,0 +1,73 @@
+@model List<CoordinacionOrientadores.Models.Asignacion>
+@using CoordinacionOrientadores.Models
+@{
+    ViewData["Title"] = "Calendario consolidado";
+    var fecha = (DateTime)ViewBag.Fecha;
+    var ausentesHoy = ViewBag.AusentesHoy as List<Orientador>;
+}
+
+<h1>Calendario consolidado</h1>
+<p class="text-muted">Vista para la coordinadora: todo el equipo en un solo lugar para un día, sin afectar el calendario individual de cada uno.</p>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input type="date" name="fecha" class="form-control" value="@fecha.ToString("yyyy-MM-dd")" onchange="this.form.submit()" />
+    </div>
+</form>
+
+<h4>@fecha.ToString("dddd dd 'de' MMMM yyyy")</h4>
+
+@if (ausentesHoy!.Count > 0)
+{
+    <div class="alert alert-warning">
+        <strong>Ausentes hoy:</strong> @string.Join(", ", ausentesHoy.Select(o => o.Nombre))
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No hay procesos programados este día.</p>
+}
+else
+{
+    <table class="table table-bordered align-middle">
+        <thead>
+            <tr>
+                <th>Hora</th>
+                <th>Orientador</th>
+                <th>Proceso</th>
+                <th>Sede</th>
+                <th>Enlace</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var a in Model)
+        {
+            var filaClase = a.Estado == EstadoAsignacion.EnConflicto ? "table-danger" : "";
+            <tr class="@filaClase">
+                <td>@a.HoraInicio.ToString(@"hh\:mm") - @a.HoraFin.ToString(@"hh\:mm")</td>
+                <td>@a.OrientadorNombre</td>
+                <td>@a.ProcesoNombre</td>
+                <td>@a.Sede</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(a.EnlaceReunion))
+                    {
+                        <a href="@a.EnlaceReunion" target="_blank">Abrir</a>
+                    }
+                </td>
+                <td>
+                    @if (a.Estado == EstadoAsignacion.EnConflicto)
+                    {
+                        <span class="badge bg-danger">⚠ Conflicto</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">@a.Estado</span>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
